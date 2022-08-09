@@ -12,22 +12,9 @@ public class GetEmployeeIdHandler implements Handler {
     @Override
     public void handle(@NotNull Context ctx) throws Exception {
         int id = Integer.parseInt(ctx.pathParam("id"));
-
-        boolean found = false;
-
-        for(Employee e: App.employees){
-            if(e.getId() == id){
-                Employee employee = e;
-                Gson gson = new Gson();
-                String json = gson.toJson(employee);
-                ctx.result(json);
-                return;
-            }
-        }
-
-        if(!found){
-            ctx.status(404);
-            ctx.result("Coould not be found");
-        }
+        Employee employee = App.employeeService.retrieveEmployeeById(id);
+        Gson gson = new Gson();
+        String json = gson.toJson(employee);
+        ctx.result(json);
     }
 }
