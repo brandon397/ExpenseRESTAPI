@@ -8,7 +8,9 @@ import dev.cornejo.handlers.employee.DeleteEmployeeByIdHandler;
 import dev.cornejo.handlers.employee.GetEmployeeIdHandler;
 import dev.cornejo.handlers.employee.UpdateEmployeeHandler;
 import dev.cornejo.handlers.expenses.CreateExpenseIdHandler;
+import dev.cornejo.handlers.expenses.DeleteExpenseHandler;
 import dev.cornejo.handlers.expenses.GetExpenseIdHandler;
+import dev.cornejo.handlers.expenses.UpdateExpenseHandler;
 import dev.cornejo.services.employee.EmployeeServiceImpl;
 import dev.cornejo.services.employee.EmployeeService;
 import dev.cornejo.services.expenses.ExpenseServiceImpl;
@@ -37,16 +39,18 @@ public class App {
 
         CreateExpenseIdHandler createExpenseIdHandler = new CreateExpenseIdHandler();
         GetExpenseIdHandler getExpenseIdHandler = new GetExpenseIdHandler();
+        DeleteExpenseHandler deleteExpenseHandler = new DeleteExpenseHandler();
+        UpdateExpenseHandler updateExpenseHandler = new UpdateExpenseHandler();
 
         app.post("/employee", createEmployeeHandler);
         app.get("/employee/{id}", getEmployeeIdHandler);
-
-
         app.delete("/employee/{id}",deleteEmployeeByIdHandler);
         app.put("/employee/{id}", updateEmployeeHandler);
 
-        app.get("/expenseId", createExpenseIdHandler);
-        app.post("/expenseId", getExpenseIdHandler);
+        app.post("/expenseId", createExpenseIdHandler);
+        app.get("/expenseId", getExpenseIdHandler);
+        app.delete("/expenseId",deleteExpenseHandler);
+        app.put("/expenseId", updateExpenseHandler);
 
 
         Handler getAllEmployees = ctx ->{
@@ -64,12 +68,12 @@ public class App {
         }
 
         gson = new Gson();
-        List<Employee> employee = App.employeeService.getAllEmployees();
-        String json = gson.toJson(employee);
+        List<Employee> employees = App.employeeService.getAllEmployees();
+        String json = gson.toJson(employees);
         ctx.result(json);
     };
 
-        app.get("/employee", getAllEmployees);
+        app.get("/employees", getAllEmployees);
         app.start();
     }
 
