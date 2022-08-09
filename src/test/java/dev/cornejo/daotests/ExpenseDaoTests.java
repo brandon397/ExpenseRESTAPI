@@ -3,10 +3,7 @@ import dev.cornejo.daos.expensedaos.ExpenseDAO;
 import dev.cornejo.daos.expensedaos.ExpenseDaoPostgres;
 import dev.cornejo.entities.Expense;
 import dev.cornejo.utils.ConnectionUtil;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import java.security.spec.ECField;
 import java.sql.Connection;
@@ -36,6 +33,7 @@ public class ExpenseDaoTests {
         }
     }
         @Test
+        @Order(1)
         void create_expense_test(){
          Expense expense = new Expense(1,50.00,"pending","Mike","New supplies","Work");
          Expense savedExpense = expenseDAO.createExpense(expense);
@@ -44,12 +42,14 @@ public class ExpenseDaoTests {
         }
 
         @Test
+        @Order(2)
         void get_expense_by_id_test(){
             Expense expense = expenseDAO.getExpenseById(1);
             Assertions.assertEquals(1,expense.getExpenseId());
         }
 
         @Test
+        @Order(3)
         void update_expense_test(){
             Expense expensev2 = new Expense(1,50.00,"pending","Mike","new supplies","work expense");
             expenseDAO.updateExpense(expensev2);
@@ -58,12 +58,14 @@ public class ExpenseDaoTests {
         }
 
         @Test
+        @Order(4)
         void delete_expense_by_id(){
             boolean result = expenseDAO.deleteExpenseById(1);
             Assertions.assertTrue(result);
         }
 
         @Test
+        @Order(5)
         void get_all_expenses_test(){
             Expense expense1 = new Expense(1,100,"Approved","Nicholas","Work Supplies", "Work");
             Expense expense2 = new Expense(2,300,"Pending","Billy","Groceries","Food");

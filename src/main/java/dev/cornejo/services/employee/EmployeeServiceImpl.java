@@ -4,9 +4,9 @@ import dev.cornejo.daos.expensedaos.EmployeeDAO;
 import dev.cornejo.entities.Employee;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class EmployeeServiceImpl implements EmployeeServices {
+
+public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeDAO employeeDAO;
 
@@ -58,13 +58,4 @@ public class EmployeeServiceImpl implements EmployeeServices {
         return employeeDAO.getAllEmployees();
     }
 
-    @Override
-    public List<Employee> getEmployeeByName(String name) {
-        List<Employee> allEmployees = this.getAllEmployees();
-
-        List<Employee> sortedEmployeeList =
-                allEmployees.stream().filter(employee -> employee.getName().equals(name)).collect(Collectors.toList());
-
-        return sortedEmployeeList;
-    }
 }

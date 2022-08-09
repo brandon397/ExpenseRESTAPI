@@ -4,7 +4,7 @@ import dev.cornejo.entities.Expense;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ExpenseServiceImpl implements ExpenseServices {
+public class ExpenseServiceImpl implements ExpenseService {
 
     private ExpenseDAO expenseDAO;
 

@@ -2,7 +2,7 @@ package dev.cornejo.services.employee;
 import dev.cornejo.entities.Employee;
 import java.util.List;
 
-public interface EmployeeServices {
+public interface EmployeeService {
 
     Employee registerEmployee (Employee employee);
 
@@ -13,7 +13,5 @@ public interface EmployeeServices {
     Employee modifyEmployee (Employee employee);
 
     List<Employee> getAllEmployees();
-
-    List<Employee> getEmployeeByName(String name);
 
 }

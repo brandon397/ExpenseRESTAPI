@@ -10,7 +10,7 @@ import dev.cornejo.handlers.employee.UpdateEmployeeHandler;
 import dev.cornejo.handlers.expenses.CreateExpenseIdHandler;
 import dev.cornejo.handlers.expenses.GetExpenseIdHandler;
 import dev.cornejo.services.employee.EmployeeServiceImpl;
-import dev.cornejo.services.employee.EmployeeServices;
+import dev.cornejo.services.employee.EmployeeService;
 import dev.cornejo.services.expenses.ExpenseServiceImpl;
 import io.javalin.Javalin;
 import io.javalin.http.Handler;
@@ -23,7 +23,7 @@ import java.util.List;
 // You will demo your application 8/10.
 public class App {
 
-    public static EmployeeServices employeeService = new EmployeeServiceImpl(new EmployeeDaoPostgres()); //Hold id's on server for employees
+    public static EmployeeService employeeService = new EmployeeServiceImpl(new EmployeeDaoPostgres()); //Hold id's on server for employees
     public static ExpenseServiceImpl expenseServices = new ExpenseServiceImpl(new ExpenseDaoPostgres());//Hold id's on server for expenses
 
 
@@ -38,27 +38,27 @@ public class App {
         CreateExpenseIdHandler createExpenseIdHandler = new CreateExpenseIdHandler();
         GetExpenseIdHandler getExpenseIdHandler = new GetExpenseIdHandler();
 
-        app.post("/name", createEmployeeHandler);
-        app.get("/id", getEmployeeIdHandler);
+        app.post("/employee", createEmployeeHandler);
+        app.get("/employee/{id}", getEmployeeIdHandler);
 
 
-        app.delete("/id",deleteEmployeeByIdHandler);
-        app.put("/id", updateEmployeeHandler);
+        app.delete("/employee/{id}",deleteEmployeeByIdHandler);
+        app.put("/employee/{id}", updateEmployeeHandler);
 
         app.get("/expenseId", createExpenseIdHandler);
-        app.post("/expense", getExpenseIdHandler);
+        app.post("/expenseId", getExpenseIdHandler);
 
 
         Handler getAllEmployees = ctx ->{
-            String name = ctx.queryParam("name");
+            int id = Integer.parseInt(ctx.pathParam("id"));
             Gson gson = new Gson();
 
-        if(name == null){
-            List<Employee> employee = App.employeeService.getAllEmployees();
-            String json = gson.toJson(employee);
+        if(id == 0){
+            List<Employee> employees =  App.employeeService.getAllEmployees();
+            String json = gson.toJson(employees);
             ctx.result(json);
         }else{
-            List<Employee> employee = App.employeeService.getEmployeeByName(name);
+            Employee employee = App.employeeService.retrieveEmployeeById(id);
             String json = gson.toJson(employee);
             ctx.result(json);
         }

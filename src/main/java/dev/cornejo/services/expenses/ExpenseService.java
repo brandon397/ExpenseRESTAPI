@@ -2,7 +2,7 @@ package dev.cornejo.services.expenses;
 import dev.cornejo.entities.Expense;
 import java.util.List;
 
-public interface ExpenseServices {
+public interface ExpenseService {
 
     Expense registerExpense (Expense expense);
 
